@@ -1,0 +1,109 @@
+networks:
+  vuln-external:
+    driver: bridge
+
+services:
+  # ── MCP Servers ────────────────────────────────────────────────────
+  schema-poison-notes:
+    build: ./servers/schema-poison-notes
+    ports:
+      - "127.0.0.1:8001:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  response-inject-tickets:
+    build: ./servers/response-inject-tickets
+    ports:
+      - "127.0.0.1:8002:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  shadow-exfil:
+    build: ./servers/shadow-exfil
+    ports:
+      - "127.0.0.1:8003:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  squatting-file-ops:
+    build: ./servers/squatting-file-ops
+    ports:
+      - "127.0.0.1:8004:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  tool-poisoning-calc:
+    build: ./servers/tool-poisoning-calc
+    ports:
+      - "127.0.0.1:8005:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  true-rug-pull:
+    build: ./servers/true-rug-pull
+    ports:
+      - "127.0.0.1:8006:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  resource-poison-docs:
+    build: ./servers/resource-poison-docs
+    ports:
+      - "127.0.0.1:8007:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  indirect-inject-fetcher:
+    build: ./servers/indirect-inject-fetcher
+    ports:
+      - "127.0.0.1:8008:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  exfil-chain-analytics:
+    build: ./servers/exfil-chain-analytics
+    ports:
+      - "127.0.0.1:8009:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+
+  denial-of-wallet:
+    build: ./servers/denial-of-wallet
+    ports:
+      - "127.0.0.1:8010:8080"
+    networks:
+      - vuln-external
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+  # ── Test Runner (only runs with --profile test) ────────────────────
+  smoke-test:
+    build: ./tests/smoke
+    profiles:
+      - test
+    networks:
+      - vuln-external
+    depends_on:
+      - schema-poison-notes
+      - response-inject-tickets
+      - shadow-exfil
+      - squatting-file-ops
+      - tool-poisoning-calc
+      - true-rug-pull
+      - resource-poison-docs
+      - indirect-inject-fetcher
+      - exfil-chain-analytics
+      - denial-of-wallet

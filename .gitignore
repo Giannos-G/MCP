@@ -1,0 +1,31 @@
+# Compiled Go binaries (from local builds)
+servers/schema-poison-notes/schema-poison-notes
+servers/response-inject-tickets/response-inject-tickets
+servers/shadow-exfil/shadow-exfil
+servers/squatting-file-ops/squatting-file-ops
+servers/tool-poisoning-calc/tool-poisoning-calc
+servers/true-rug-pull/true-rug-pull
+servers/resource-poison-docs/resource-poison-docs
+servers/indirect-inject-fetcher/indirect-inject-fetcher
+servers/exfil-chain-analytics/exfil-chain-analytics
+servers/denial-of-wallet/denial-of-wallet
+tests/smoke/smoke-test
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / local config
+.idea/
+.vscode/
+.claude/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Misc
+.env
+tmp/
